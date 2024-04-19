@@ -22,7 +22,7 @@ export default function RootLayout({
       <body className={` ${inter.className}`}>
         <QCProvider>
           <Theme appearance="dark" accentColor="red">
-            <Flex className="min-h-screen">{children}</Flex>
+            <Flex className="min-h-screen">{/* {children} */}</Flex>
           </Theme>
         </QCProvider>
       </body>
