@@ -64,6 +64,7 @@ export default function Home() {
             <Flex direction={"column"} gap="2">
               {locations.map((location, idx) => (
                 <Button
+                  key={idx}
                   variant={
                     selectedLocation?.id === location.id ? "solid" : "outline"
                   }

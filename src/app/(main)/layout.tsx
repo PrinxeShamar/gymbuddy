@@ -15,7 +15,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     if (!user && !isLoading) {
       router.push("/signin");
     }
-  }, [user, isLoading]);
+  }, [user, isLoading, router]);
 
   if (user && !isLoading) {
     return (

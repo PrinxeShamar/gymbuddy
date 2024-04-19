@@ -62,7 +62,7 @@ export default function Page({
         <Flex flexGrow={"1"} direction={"column"}>
           <Flex p="6" direction={"column"} gap="2">
             {messages?.map((message) => (
-              <Card className="min-h-0">
+              <Card className="min-h-0" key={message.id}>
                 <Flex direction={"column"} gap="2">
                   <Text weight={"bold"} size={"1"}>
                     {message.userId}

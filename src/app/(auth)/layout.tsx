@@ -12,7 +12,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     if (user && !isLoading) {
       router.push("/");
     }
-  }, [user, isLoading]);
+  }, [user, isLoading, router]);
 
   if (!user && !isLoading) {
     return <>{children}</>;

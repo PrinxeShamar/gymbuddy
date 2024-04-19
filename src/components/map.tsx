@@ -77,7 +77,7 @@ export function Map() {
         }
       });
     }
-  }, [map]);
+  }, [map, setLocations]);
 
   if (isLoaded) {
     return (
