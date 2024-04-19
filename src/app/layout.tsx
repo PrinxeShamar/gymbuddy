@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import "@radix-ui/themes/styles.css";
 import { Flex, Theme } from "@radix-ui/themes";
+import { QCProvider } from "@/components/QCProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,9 +20,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={` ${inter.className}`}>
-        <Theme appearance="dark" accentColor="red">
-          <Flex className="min-h-screen">{children}</Flex>
-        </Theme>
+        <QCProvider>
+          <Theme appearance="dark" accentColor="red">
+            <Flex className="h-screen">{children}</Flex>
+          </Theme>
+        </QCProvider>
       </body>
     </html>
   );
