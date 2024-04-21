@@ -21,8 +21,8 @@ export default function Home() {
   const router = useRouter();
 
   return (
-    <Flex flexGrow={"1"} direction={"row"}>
-      <Flex minWidth={"20%"} direction={"column"}>
+    <Flex flexGrow={"1"} direction={"row"} overflow={"hidden"}>
+      <Flex direction={"column"} overflow={"hidden"}>
         {selectedLocation && (
           <>
             <Flex direction={"column"} p="6" gap={"4"}>
@@ -55,13 +55,18 @@ export default function Home() {
             <Separator size={"4"} />
           </>
         )}
-        <Flex direction={"column"} p="6" gap="4">
+        <Flex
+          flexGrow={"1"}
+          overflow={"hidden"}
+          direction={"column"}
+          p="6"
+          gap="4"
+        >
           <Text weight={"bold"} size={"4"}>
             Locations
           </Text>
-
-          <Accordion.Root type="single" collapsible>
-            <Flex direction={"column"} gap="2">
+          <ScrollArea>
+            <Flex flexGrow={"1"} direction={"column"} gap="2" mr={"4"}>
               {locations.map((location, idx) => (
                 <Button
                   key={idx}
@@ -74,7 +79,7 @@ export default function Home() {
                 </Button>
               ))}
             </Flex>
-          </Accordion.Root>
+          </ScrollArea>
         </Flex>
         <Separator size={"4"} />
       </Flex>

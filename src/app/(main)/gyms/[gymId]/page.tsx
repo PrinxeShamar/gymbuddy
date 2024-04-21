@@ -1,5 +1,6 @@
 "use client";
 
+import { getMessages } from "@/api/messages";
 import { useGym } from "@/stores/gymQuery";
 import { useMessages, useSendMessage } from "@/stores/messagesQuery";
 import {
@@ -11,7 +12,8 @@ import {
   Text,
   TextField,
 } from "@radix-ui/themes";
-import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect, useRef, useState } from "react";
 
 export default function Page({
   params: { gymId },
@@ -21,20 +23,25 @@ export default function Page({
   const [message, setMessage] = useState("");
   const { data: gym } = useGym(gymId);
   const { data: messages } = useMessages(gymId);
-  const sendMessage = useSendMessage();
+  const { mutate: sendMessage } = useSendMessage();
 
   const onSendMessage = () => {
     setMessage("");
-    sendMessage.mutate({
+    sendMessage({
       gymId,
       content: message,
     });
   };
 
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   if (gym) {
     return (
-      <Flex flexGrow={"1"} direction={"row"}>
-        <Flex width={"20%"} direction={"column"}>
+      <Flex flexGrow={"1"} direction={"row"} overflow={"hidden"}>
+        <Flex direction={"column"}>
           <Flex direction={"column"} p="6" gap={"4"}>
             <Text weight={"bold"} size={"4"}>
               Gym Details
@@ -59,19 +66,24 @@ export default function Page({
           <Separator size={"4"} />
         </Flex>
         <Separator size={"4"} orientation={"vertical"} />
-        <Flex flexGrow={"1"} direction={"column"}>
-          <Flex p="6" direction={"column"} gap="2">
-            {messages?.map((message) => (
-              <Card className="min-h-0" key={message.id}>
-                <Flex direction={"column"} gap="2">
-                  <Text weight={"bold"} size={"1"}>
-                    {message.userId}
-                  </Text>
-                  <Text size={"1"}>{message.content}</Text>
+        <Flex flexGrow={"1"} direction={"column"} overflow={"hidden"}>
+          <ScrollArea dir="rtl">
+            <Flex p="6" direction={"column"} gap="2" flexGrow={"1"}>
+              {messages?.map((message) => (
+                <Flex key={message.id} flexShrink={"1"} direction={"column"}>
+                  <Card>
+                    <Flex direction={"column"} gap="2">
+                      <Text weight={"bold"} size={"1"}>
+                        {message.user.fullName}
+                      </Text>
+                      <Text size={"1"}>{message.content}</Text>
+                    </Flex>
+                  </Card>
                 </Flex>
-              </Card>
-            ))}
-          </Flex>
+              ))}
+              <div ref={messagesEndRef} />
+            </Flex>
+          </ScrollArea>
           <Separator size={"4"} />
           <Flex direction={"row"} gap={"2"} p="6">
             <Flex direction={"column"} flexGrow={"1"}>

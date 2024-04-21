@@ -19,7 +19,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   if (user && !isLoading) {
     return (
-      <Flex flexGrow={"1"} direction={"column"}>
+      <Flex flexGrow={"1"} overflow={"hidden"} direction={"column"}>
         <Flex px="6" py="4" align={"center"}>
           <Flex flexGrow={"1"}>
             <Text weight={"bold"} size={"4"}>
@@ -37,7 +37,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </DropdownMenu.Content>
           </DropdownMenu.Root>
         </Flex>
-        <Separator size="4" />
+        <Flex>
+          <Separator size="4" />
+        </Flex>
         {children}
       </Flex>
     );

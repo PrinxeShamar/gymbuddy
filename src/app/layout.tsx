@@ -19,10 +19,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={` ${inter.className}`}>
+      <body className={`${inter.className}`}>
         <QCProvider>
           <Theme appearance="dark" accentColor="red">
-            <Flex className="min-h-screen">{children}</Flex>
+            <Flex className="h-screen" overflow={"hidden"} direction={"column"}>
+              {children}
+            </Flex>
           </Theme>
         </QCProvider>
       </body>

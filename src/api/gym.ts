@@ -8,43 +8,40 @@ export const getGym = async (id: string) => {
   let supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser()
   if (user) {
-    const google = new Client({});
-
-    const gymDetailsResponse = await google.placeDetails({
-      params: {
-        place_id: id,
-        key: process.env.NEXT_PUBLIC_GOOGLE_API_KEY!,
-      },
-      timeout: 1000
-    });
-
-    let gym = await prisma.gym.upsert({
+    let gym = await prisma.gym.findUnique({
       select: {
         id: true,
         name: true,
         address: true,
       },
-      create: {
-        id: id,
-        name: gymDetailsResponse.data.result.name,
-        address: gymDetailsResponse.data.result.formatted_address,
-        users: {
-          connect: {
-            id: user.id,
-          }
-        }
-      },
-      update: {
-        users: {
-          connect: {
-            id: user.id,
-          }
-        }
-      },
       where: {
         id: id,
-      }
-    });
+      },
+    })
+
+    if (!gym) {
+      const google = new Client({});
+      const gymDetailsResponse = await google.placeDetails({
+        params: {
+          place_id: id,
+          key: process.env.NEXT_PUBLIC_GOOGLE_API_KEY!,
+        },
+        timeout: 1000
+      });
+
+      gym = await prisma.gym.create({
+        select: {
+          id: true,
+          name: true,
+          address: true,
+        },
+        data: {
+          id: id,
+          name: gymDetailsResponse.data.result.name,
+          address: gymDetailsResponse.data.result.formatted_address,
+        },
+      });
+    }
     return gym;
   }
 };

@@ -6,6 +6,7 @@ import {
 } from "@/api/auth";
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 export const useUser = () => {
   return useQuery({
@@ -20,6 +21,10 @@ export const useUser = () => {
 export const useSignIn = () => {
   const queryClient = useQueryClient();
 
+  useEffect(() => {
+    console.log("useSignIn");
+  }, []);
+
   return useMutation({
     mutationFn: signInAction,
     onSuccess: () => {
@@ -33,6 +38,10 @@ export const useSignIn = () => {
 
 export const useSignUp = () => {
   const queryClient = useQueryClient();
+
+  useEffect(() => {
+    console.log("useSignUp");
+  }, []);
 
   return useMutation({
     mutationFn: signUpAction,

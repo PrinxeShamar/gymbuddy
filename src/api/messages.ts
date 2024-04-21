@@ -11,6 +11,11 @@ export const getMessages = async (gymId: string) => {
       select: {
         id: true,
         userId: true,
+        user: {
+          select: {
+            fullName: true,
+          }
+        },
         content: true,
       },
       where: {
