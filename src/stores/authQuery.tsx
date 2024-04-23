@@ -21,10 +21,6 @@ export const useUser = () => {
 export const useSignIn = () => {
   const queryClient = useQueryClient();
 
-  useEffect(() => {
-    console.log("useSignIn");
-  }, []);
-
   return useMutation({
     mutationFn: signInAction,
     onSuccess: () => {

@@ -13,6 +13,7 @@ export const useMessages = (gymId: string) => {
       .on('postgres_changes', {
         event: 'INSERT', schema: 'public', table: 'Message', filter: `gymId=eq.${gymId}`
       }, (payload) => {
+        // console.log(payload)
         queryClient.setQueryData(["messages", gymId], (old: any[]) => [...old, payload.new]);
       })
       .subscribe();

@@ -74,7 +74,7 @@ export default function Page({
                   <Card>
                     <Flex direction={"column"} gap="2">
                       <Text weight={"bold"} size={"1"}>
-                        {message.user.fullName}
+                        {message.userId}
                       </Text>
                       <Text size={"1"}>{message.content}</Text>
                     </Flex>
